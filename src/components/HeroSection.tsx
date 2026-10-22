@@ -1,42 +1,42 @@
 import React from 'react';
-import { ArrowDown, FileText, Linkedin, Mail, ExternalLink, GraduationCap, Briefcase, Sparkles } from 'lucide-react';
+import { ArrowDown, FileText, Linkedin, Mail, ExternalLink, GraduationCap, Briefcase, Compass } from 'lucide-react';
 import { usePortfolio } from '../context/PortfolioContext';
 
 export const HeroSection: React.FC = () => {
-  const { data } = usePortfolio();
+  const { data, setIsExploreOpen } = usePortfolio();
 
   return (
-    <section id="about" className="pt-28 pb-16 sm:pt-36 sm:pb-24 relative overflow-hidden">
-      {/* Background Subtle Ambient Tint */}
+    <section id="about" className="pt-24 pb-14 sm:pt-32 sm:pb-20 relative overflow-hidden">
+      {/* Background Subtle Ambient Glow */}
       <div 
-        className="absolute top-12 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-emerald-600/5 blur-[120px] rounded-full pointer-events-none -z-10" 
+        className="absolute top-12 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-emerald-500/5 dark:bg-emerald-500/5 light:bg-emerald-500/10 blur-[120px] rounded-full pointer-events-none -z-10" 
         aria-hidden="true" 
       />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
           
           {/* Main Hero Copy */}
-          <div className="lg:col-span-7 space-y-6">
+          <div className="lg:col-span-7 space-y-5">
             
             {/* Status Line */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/25">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/10 dark:bg-emerald-500/10 light:bg-emerald-100 text-emerald-400 dark:text-emerald-300 light:text-emerald-800 border border-emerald-500/25 light:border-emerald-300">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span>{data.profile.statusLine}</span>
             </div>
 
             {/* Main Page h1 */}
-            <div className="space-y-3">
-              <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight">
+            <div className="space-y-2">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white dark:text-white light:text-slate-900 leading-[1.12]">
                 {data.profile.heroTitle}
               </h1>
-              <p className="text-xl sm:text-2xl font-semibold text-emerald-400/90 tracking-tight">
+              <p className="text-xl sm:text-2xl font-bold text-emerald-400 dark:text-emerald-400 light:text-emerald-700 tracking-tight">
                 {data.profile.heroTagline}
               </p>
             </div>
 
             {/* Approved Hero Description */}
-            <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl">
+            <p className="text-base sm:text-lg text-slate-300 dark:text-slate-300 light:text-slate-700 leading-relaxed max-w-2xl font-normal">
               {data.profile.heroBio}
             </p>
 
@@ -44,7 +44,7 @@ export const HeroSection: React.FC = () => {
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <a
                 href="#work"
-                className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold flex items-center gap-2 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-emerald-400 active:scale-95"
+                className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold flex items-center gap-2 shadow-xs transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
               >
                 <span>View my work</span>
                 <ArrowDown className="w-4 h-4" />
@@ -52,103 +52,104 @@ export const HeroSection: React.FC = () => {
 
               <a
                 href="#resume"
-                className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700/80 text-slate-200 text-sm font-semibold border border-slate-700 flex items-center gap-2 transition-all focus:outline-none focus:ring-2 focus:ring-slate-400"
+                className="px-5 py-2.5 rounded-xl bg-slate-800 dark:bg-slate-800 light:bg-white hover:bg-slate-700 dark:hover:bg-slate-700 light:hover:bg-slate-100 text-slate-200 dark:text-slate-200 light:text-slate-800 text-sm font-semibold border border-slate-700 dark:border-slate-700 light:border-slate-300 flex items-center gap-2 transition-all shadow-xs"
               >
-                <FileText className="w-4 h-4 text-emerald-400" />
+                <FileText className="w-4 h-4 text-emerald-400 light:text-emerald-600" />
                 <span>Resume</span>
               </a>
 
-              <a
-                href="#contact"
-                className="px-4 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-slate-850 text-sm font-medium transition-colors"
+              <button
+                onClick={() => setIsExploreOpen(true)}
+                className="px-4 py-2.5 rounded-xl text-slate-300 dark:text-slate-300 light:text-slate-700 hover:text-white light:hover:text-slate-900 hover:bg-slate-800/80 light:hover:bg-slate-200 text-sm font-medium transition-colors flex items-center gap-1.5"
               >
-                <span>Contact</span>
-              </a>
+                <Compass className="w-4 h-4 text-emerald-400 light:text-emerald-600" />
+                <span>Explore Topics</span>
+              </button>
             </div>
 
             {/* Direct Professional Links */}
-            <div className="pt-2 flex flex-wrap items-center gap-4 text-xs text-slate-400">
-              <span className="text-slate-500 font-medium">Direct Links:</span>
+            <div className="pt-2 flex flex-wrap items-center gap-4 text-xs text-slate-400 dark:text-slate-400 light:text-slate-500">
+              <span className="font-medium text-slate-500 dark:text-slate-500 light:text-slate-400">Direct Links:</span>
               <a
                 href={data.profile.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 text-slate-300 hover:text-white transition-colors"
+                className="flex items-center gap-1.5 text-slate-300 dark:text-slate-300 light:text-slate-700 hover:text-white light:hover:text-slate-900 transition-colors"
               >
-                <Linkedin className="w-4 h-4 text-blue-400" />
+                <Linkedin className="w-3.5 h-3.5 text-blue-400" />
                 <span>linkedin.com/in/isaac-pohl</span>
                 <ExternalLink className="w-3 h-3 text-slate-500" />
               </a>
               <a
                 href={`mailto:${data.profile.email}`}
-                className="flex items-center gap-1.5 text-slate-300 hover:text-white transition-colors"
+                className="flex items-center gap-1.5 text-slate-300 dark:text-slate-300 light:text-slate-700 hover:text-white light:hover:text-slate-900 transition-colors"
               >
-                <Mail className="w-4 h-4 text-emerald-400" />
+                <Mail className="w-3.5 h-3.5 text-emerald-400 light:text-emerald-600" />
                 <span>{data.profile.email}</span>
               </a>
             </div>
           </div>
 
           {/* Right Column: Informative Background Summary Card */}
-          <div className="lg:col-span-5">
-            <div className="p-6 rounded-2xl bg-slate-900/70 border border-slate-800 shadow-xl space-y-5">
+          <div className="lg:col-span-5 pt-4 lg:pt-0">
+            <div className="p-6 rounded-2xl bg-slate-900/70 dark:bg-slate-900/70 light:bg-white border border-slate-800 dark:border-slate-800 light:border-slate-300 shadow-xl space-y-4">
               
               {/* Education Banner */}
-              <div className="flex items-start gap-3.5 pb-4 border-b border-slate-800/80">
-                <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shrink-0 mt-0.5">
+              <div className="flex items-start gap-3.5 pb-4 border-b border-slate-800 dark:border-slate-800 light:border-slate-200">
+                <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 light:text-emerald-700 light:bg-emerald-100 border border-emerald-500/20 light:border-emerald-300 shrink-0 mt-0.5">
                   <GraduationCap className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-[11px] font-mono font-medium text-emerald-400 uppercase tracking-wider block">
+                  <span className="text-[11px] font-mono font-semibold text-emerald-400 light:text-emerald-700 uppercase tracking-wider block">
                     Education
                   </span>
-                  <div className="font-bold text-white text-base leading-snug">
+                  <div className="font-bold text-white dark:text-white light:text-slate-900 text-base leading-snug">
                     Murray State University
                   </div>
-                  <div className="text-xs text-slate-300 mt-0.5">
+                  <div className="text-xs text-slate-300 dark:text-slate-300 light:text-slate-600 mt-0.5">
                     Junior • Computer Science & Agriculture–Agriscience Technology
                   </div>
-                  <div className="text-[11px] font-mono text-slate-400 mt-0.5">
+                  <div className="text-[11px] font-mono text-slate-400 dark:text-slate-400 light:text-slate-500 mt-0.5">
                     Expected May 2028
                   </div>
                 </div>
               </div>
 
               {/* Experience Highlights */}
-              <div className="space-y-3">
-                <span className="text-[11px] font-mono font-medium text-slate-400 uppercase tracking-wider block">
+              <div className="space-y-2.5">
+                <span className="text-[11px] font-mono font-medium text-slate-400 dark:text-slate-400 light:text-slate-500 uppercase tracking-wider block">
                   Core Practical Experience
                 </span>
 
-                <div className="space-y-2.5 text-xs">
-                  <div className="p-2.5 rounded-lg bg-slate-800/40 border border-slate-800 flex items-start gap-2.5">
-                    <Briefcase className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                <div className="space-y-2 text-xs">
+                  <div className="p-2.5 rounded-lg bg-slate-800/40 dark:bg-slate-800/40 light:bg-slate-50 border border-slate-800/80 dark:border-slate-800/80 light:border-slate-200 flex items-start gap-2.5">
+                    <Briefcase className="w-4 h-4 text-emerald-400 light:text-emerald-600 shrink-0 mt-0.5" />
                     <div>
-                      <span className="font-semibold text-white block">Pohl Ag Service</span>
-                      <span className="text-slate-400">Junior Assistant (May 2020–Present)</span>
-                      <p className="text-[11px] text-slate-400 mt-0.5">
-                        Soil & leaf sampling fieldwork; built Microsoft Access leaf-sample database with agronomist comparison graphs.
+                      <span className="font-semibold text-white dark:text-white light:text-slate-900 block">Pohl Ag Service</span>
+                      <span className="text-slate-400 dark:text-slate-400 light:text-slate-500 text-[11px]">Junior Assistant (May 2020–Present)</span>
+                      <p className="text-[11px] text-slate-400 dark:text-slate-400 light:text-slate-600 mt-0.5">
+                        Soil & leaf sampling fieldwork; built Microsoft Access leaf-sample database with comparison graphs.
                       </p>
                     </div>
                   </div>
 
-                  <div className="p-2.5 rounded-lg bg-slate-800/40 border border-slate-800 flex items-start gap-2.5">
-                    <Briefcase className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <div className="p-2.5 rounded-lg bg-slate-800/40 dark:bg-slate-800/40 light:bg-slate-50 border border-slate-800/80 dark:border-slate-800/80 light:border-slate-200 flex items-start gap-2.5">
+                    <Briefcase className="w-4 h-4 text-emerald-400 light:text-emerald-600 shrink-0 mt-0.5" />
                     <div>
-                      <span className="font-semibold text-white block">OneMain Financial</span>
-                      <span className="text-slate-400">Summer Technology Intern (June–August 2026)</span>
-                      <p className="text-[11px] text-slate-400 mt-0.5">
-                        AI-assisted metadata discovery, stakeholder reviews, and documentation for enterprise data discovery.
+                      <span className="font-semibold text-white dark:text-white light:text-slate-900 block">OneMain Financial</span>
+                      <span className="text-slate-400 dark:text-slate-400 light:text-slate-500 text-[11px]">Summer Technology Intern (June–August 2026)</span>
+                      <p className="text-[11px] text-slate-400 dark:text-slate-400 light:text-slate-600 mt-0.5">
+                        AI-assisted metadata discovery, stakeholder reviews, and documentation for enterprise analytical planning.
                       </p>
                     </div>
                   </div>
 
-                  <div className="p-2.5 rounded-lg bg-slate-800/40 border border-slate-800 flex items-start gap-2.5">
-                    <Briefcase className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <div className="p-2.5 rounded-lg bg-slate-800/40 dark:bg-slate-800/40 light:bg-slate-50 border border-slate-800/80 dark:border-slate-800/80 light:border-slate-200 flex items-start gap-2.5">
+                    <Briefcase className="w-4 h-4 text-emerald-400 light:text-emerald-600 shrink-0 mt-0.5" />
                     <div>
-                      <span className="font-semibold text-white block">Pohl's Greenhouse</span>
-                      <span className="text-slate-400">Owner (January 2020–May 2025)</span>
-                      <p className="text-[11px] text-slate-400 mt-0.5">
+                      <span className="font-semibold text-white dark:text-white light:text-slate-900 block">Pohl's Greenhouse</span>
+                      <span className="text-slate-400 dark:text-slate-400 light:text-slate-500 text-[11px]">Owner (January 2020–May 2025)</span>
+                      <p className="text-[11px] text-slate-400 dark:text-slate-400 light:text-slate-600 mt-0.5">
                         Managed small greenhouse business, crop records, and grant-funded environmental controls. National FFA Finalist.
                       </p>
                     </div>
@@ -157,9 +158,9 @@ export const HeroSection: React.FC = () => {
               </div>
 
               {/* Location Note */}
-              <div className="pt-2 border-t border-slate-800 text-[11px] text-slate-400 flex items-center justify-between">
+              <div className="pt-2 border-t border-slate-800 dark:border-slate-800 light:border-slate-200 text-[11px] text-slate-400 dark:text-slate-400 light:text-slate-500 flex items-center justify-between">
                 <span>Location: Haubstadt / Princeton, IN & Murray, KY</span>
-                <span className="text-emerald-400 font-medium">Dual Major</span>
+                <span className="text-emerald-400 dark:text-emerald-400 light:text-emerald-700 font-semibold">Dual Major</span>
               </div>
             </div>
           </div>

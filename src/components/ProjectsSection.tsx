@@ -1,229 +1,197 @@
 import React, { useState } from 'react';
-import { Layers, ArrowRight, Sparkles, BookOpen, ExternalLink, Code2, Check, BarChart2 } from 'lucide-react';
+import { Layers, BookOpen, ChevronDown, ChevronUp, Code2, Database, Wrench } from 'lucide-react';
 import { usePortfolio } from '../context/PortfolioContext';
 import { Project } from '../data/portfolioData';
-import { ProjectModal } from './ProjectModal';
-import { LeafSampleDemo } from './LeafSampleDemo';
 
 export const ProjectsSection: React.FC = () => {
-  const { data, selectedProject, setSelectedProject } = usePortfolio();
-  const [showDemo, setShowDemo] = useState(false);
-  const [showCoursework, setShowCoursework] = useState(false);
+  const { data, showCoursework, setShowCoursework } = usePortfolio();
+  const [expandedProjectId, setExpandedProjectId] = useState<string | null>(null);
 
   const featuredProjects = data.projects.filter((p) => p.isFeatured);
   const courseworkProjects = data.projects.filter((p) => p.type === 'Coursework');
-  const conceptProjects = data.projects.filter((p) => p.type === 'Concept & Planning');
+
+  const toggleProjectExpansion = (id: string) => {
+    setExpandedProjectId((prev) => (prev === id ? null : id));
+  };
 
   return (
-    <section id="work" className="py-24 border-t border-slate-800/60 bg-[#0b0f19]">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-16">
+    <section id="work" className="py-16 sm:py-20 border-t border-slate-800/80 dark:border-slate-800/80 light:border-slate-200 bg-[#0b0f19] dark:bg-[#0b0f19] light:bg-[#f8fafc]">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-10 sm:space-y-12">
         
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-800 pb-6">
-          <div className="space-y-2 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/25">
-              <Layers className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Built Software & Engineering Case Studies</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-              Featured Work & Projects
-            </h2>
-            <p className="text-sm text-slate-400 leading-relaxed">
-              Real projects built for agronomists, software teams, and customers, showing practical problem-solving and clean execution.
-            </p>
+        <div className="max-w-3xl space-y-2 border-b border-slate-800 dark:border-slate-800 light:border-slate-200 pb-5">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/10 dark:bg-emerald-500/10 light:bg-emerald-100 text-emerald-400 dark:text-emerald-300 light:text-emerald-800 border border-emerald-500/25 light:border-emerald-300">
+            <Layers className="w-3.5 h-3.5" />
+            <span>Practical Software & Technical Work</span>
           </div>
-
-          {/* Interactive Demo Toggle */}
-          <button
-            onClick={() => setShowDemo(!showDemo)}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-emerald-950/60 hover:bg-emerald-900/60 text-emerald-300 border border-emerald-500/40 transition-colors shrink-0 shadow-sm"
-          >
-            <BarChart2 className="w-4 h-4 text-emerald-400" />
-            <span>{showDemo ? 'Hide Leaf Sample Demo' : 'Explore Interactive Leaf Sample Demo'}</span>
-          </button>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white dark:text-white light:text-slate-900 tracking-tight">
+            Featured Projects & Systems
+          </h2>
+          <p className="text-sm sm:text-base text-slate-400 dark:text-slate-400 light:text-slate-600 leading-relaxed">
+            Real systems built for agronomy operations, enterprise data discovery, point-of-sale workflows, and client application monitoring.
+          </p>
         </div>
-
-        {/* Optional Interactive Demonstration */}
-        {showDemo && (
-          <div className="animate-in fade-in duration-300">
-            <LeafSampleDemo />
-          </div>
-        )}
 
         {/* 4 Core Featured Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {featuredProjects.map((project) => (
-            <div
-              key={project.id}
-              className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-slate-700/80 transition-all flex flex-col justify-between space-y-5 shadow-lg group"
-            >
-              <div className="space-y-4">
-                {/* Badges */}
-                <div className="flex items-center justify-between text-xs">
-                  <span className="px-2.5 py-0.5 rounded-full font-mono text-[11px] font-semibold bg-emerald-500/10 text-emerald-300 border border-emerald-500/30">
-                    {project.type}
-                  </span>
-                  <span className="text-[11px] font-mono text-slate-400">
-                    {project.status}
-                  </span>
-                </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+          {featuredProjects.map((project) => {
+            const isExpanded = expandedProjectId === project.id;
 
-                {/* Title & Subtitle */}
-                <div>
-                  <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-emerald-300 transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="text-xs text-slate-400 font-medium mt-1">
-                    {project.subtitle}
+            return (
+              <div
+                key={project.id}
+                id={`item-${project.id}`}
+                className="p-6 rounded-2xl bg-slate-900/60 dark:bg-slate-900/60 light:bg-white border border-slate-800 dark:border-slate-800 light:border-slate-300 hover:border-slate-700 dark:hover:border-slate-700 light:hover:border-slate-400 transition-all flex flex-col justify-between space-y-4 shadow-sm"
+              >
+                <div className="space-y-3">
+                  {/* Category and Status Badge */}
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="px-2.5 py-0.5 rounded-full font-mono text-[11px] font-semibold bg-emerald-500/10 dark:bg-emerald-500/10 light:bg-emerald-100 text-emerald-400 dark:text-emerald-300 light:text-emerald-800 border border-emerald-500/25 light:border-emerald-300">
+                      {project.category}
+                    </span>
+                    <span className="text-[11px] font-mono text-slate-400 dark:text-slate-400 light:text-slate-500">
+                      {project.status}
+                    </span>
+                  </div>
+
+                  {/* Title & Subtitle */}
+                  <div>
+                    <h3 className="text-lg sm:text-xl font-bold text-white dark:text-white light:text-slate-900 tracking-tight">
+                      {project.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-400 dark:text-slate-400 light:text-slate-600 font-medium mt-0.5">
+                      {project.subtitle}
+                    </p>
+                  </div>
+
+                  {/* What it was & Purpose */}
+                  <p className="text-xs sm:text-sm text-slate-300 dark:text-slate-300 light:text-slate-700 leading-relaxed">
+                    {project.summary}
                   </p>
-                </div>
 
-                {/* Summary */}
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                  {project.summary}
-                </p>
+                  {/* Role and Contribution */}
+                  <div className="text-xs text-slate-300 dark:text-slate-300 light:text-slate-700 space-y-1 bg-slate-800/40 dark:bg-slate-800/40 light:bg-slate-50 p-3 rounded-xl border border-slate-700/50 dark:border-slate-700/50 light:border-slate-200">
+                    <div>
+                      <span className="font-mono text-slate-400 dark:text-slate-400 light:text-slate-500 font-medium">My Role:</span>{' '}
+                      <span className="font-semibold text-white dark:text-white light:text-slate-900">{project.role}</span>
+                    </div>
+                    <p className="text-[11px] text-slate-300 dark:text-slate-300 light:text-slate-600 leading-relaxed pt-0.5">
+                      {project.contribution}
+                    </p>
+                  </div>
 
-                {/* Role Callout */}
-                <div className="text-xs text-slate-400">
-                  <span className="text-slate-500 font-mono">Role:</span>{' '}
-                  <span className="font-semibold text-slate-200">{project.role}</span>
-                </div>
-
-                {/* Technologies */}
-                <div className="flex flex-wrap gap-1.5 pt-1">
-                  {project.technologies.slice(0, 4).map((tech, i) => (
-                    <span
-                      key={i}
-                      className="px-2 py-0.5 rounded text-[11px] font-mono bg-slate-800 text-slate-300 border border-slate-700/80"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                  {project.technologies.length > 4 && (
-                    <span className="px-1.5 py-0.5 text-[10px] text-slate-500 font-mono">
-                      +{project.technologies.length - 4} more
-                    </span>
+                  {/* Optional More Information Expansion */}
+                  {isExpanded && (
+                    <div className="space-y-2.5 pt-2 border-t border-slate-800 dark:border-slate-800 light:border-slate-200 text-xs text-slate-300 dark:text-slate-300 light:text-slate-600 animate-in fade-in">
+                      <div>
+                        <span className="font-mono font-bold text-emerald-400 dark:text-emerald-400 light:text-emerald-700 uppercase tracking-wider text-[10px] block">
+                          Operational Need & Problem:
+                        </span>
+                        <p className="text-[11px] leading-relaxed mt-0.5">{project.problem}</p>
+                      </div>
+                      <div>
+                        <span className="font-mono font-bold text-cyan-400 dark:text-cyan-400 light:text-cyan-700 uppercase tracking-wider text-[10px] block">
+                          Practical Result:
+                        </span>
+                        <p className="text-[11px] leading-relaxed mt-0.5">{project.practicalResult}</p>
+                      </div>
+                      {project.lessons && (
+                        <div className="p-2.5 rounded-lg bg-slate-850/60 dark:bg-slate-850/60 light:bg-slate-100 border border-slate-700/60 dark:border-slate-700/60 light:border-slate-200">
+                          <span className="font-mono font-bold text-amber-400 dark:text-amber-400 light:text-amber-700 uppercase tracking-wider text-[10px] block">
+                            Key Takeaway:
+                          </span>
+                          <p className="text-[11px] leading-relaxed mt-0.5">{project.lessons}</p>
+                        </div>
+                      )}
+                    </div>
                   )}
+
+                  {/* Technologies */}
+                  <div className="flex flex-wrap gap-1.5 pt-1">
+                    {project.technologies.map((tech, i) => (
+                      <span
+                        key={i}
+                        className="px-2 py-0.5 rounded text-[11px] font-mono bg-slate-800 dark:bg-slate-800 light:bg-slate-100 text-slate-300 dark:text-slate-300 light:text-slate-700 border border-slate-700/70 dark:border-slate-700/70 light:border-slate-300"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Expansion Action Toggle */}
+                <div className="pt-3 border-t border-slate-800 dark:border-slate-800 light:border-slate-200 flex items-center justify-between">
+                  <button
+                    onClick={() => toggleProjectExpansion(project.id)}
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400 dark:text-emerald-400 light:text-emerald-700 hover:text-emerald-300 dark:hover:text-emerald-300 light:hover:text-emerald-800 transition-colors"
+                  >
+                    <span>{isExpanded ? 'Show less' : 'More about this project'}</span>
+                    {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                  </button>
                 </div>
               </div>
-
-              {/* Single Clear Action */}
-              <div className="pt-4 border-t border-slate-800 flex items-center justify-between">
-                <button
-                  onClick={() => setSelectedProject(project)}
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition-colors focus:outline-none focus:underline"
-                >
-                  <span>Read Project Details</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
-        {/* Academic Coursework & Research Presentations */}
-        <div className="space-y-4 pt-4">
-          <div className="flex items-center justify-between">
+        {/* Academic Coursework & Technical Analyses */}
+        <div className="p-5 sm:p-6 rounded-2xl bg-slate-900/40 dark:bg-slate-900/40 light:bg-white border border-slate-800 dark:border-slate-800 light:border-slate-300 space-y-4 shadow-sm">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <h3 className="text-lg font-bold text-white">
-                Academic Coursework & Technical Analyses
+              <h3 className="text-base sm:text-lg font-bold text-white dark:text-white light:text-slate-900 flex items-center gap-2">
+                <BookOpen className="w-4 h-4 text-emerald-400 light:text-emerald-600" />
+                <span>Academic Coursework & Technical Analyses</span>
               </h3>
-              <p className="text-xs text-slate-400 mt-0.5">
-                Classroom computer science projects and agricultural technology research presentations.
+              <p className="text-xs text-slate-400 dark:text-slate-400 light:text-slate-500 mt-0.5">
+                Classroom software engineering, database modeling, and agricultural drone systems.
               </p>
             </div>
 
             <button
               onClick={() => setShowCoursework(!showCoursework)}
-              className="text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition-colors"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-800 dark:bg-slate-800 light:bg-slate-100 hover:bg-slate-700 dark:hover:bg-slate-700 light:hover:bg-slate-200 text-slate-200 dark:text-slate-200 light:text-slate-800 border border-slate-700 dark:border-slate-700 light:border-slate-300 transition-colors shrink-0"
+              aria-expanded={showCoursework}
             >
-              {showCoursework ? 'Hide Coursework' : 'View Coursework Projects (3)'}
+              <span>{showCoursework ? 'Hide Coursework' : 'Explore Coursework (4 Projects)'}</span>
+              {showCoursework ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
             </button>
           </div>
 
           {showCoursework && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2 animate-in fade-in">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-slate-800 dark:border-slate-800 light:border-slate-200 animate-in fade-in">
               {courseworkProjects.map((project) => (
                 <div
                   key={project.id}
-                  className="p-5 rounded-xl bg-slate-900/40 border border-slate-800 flex flex-col justify-between space-y-3"
+                  id={`item-${project.id}`}
+                  className="p-4 rounded-xl bg-slate-800/40 dark:bg-slate-800/40 light:bg-slate-50 border border-slate-700/60 dark:border-slate-700/60 light:border-slate-200 space-y-2 text-xs"
                 >
-                  <div className="space-y-2">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-slate-800 text-slate-300 border border-slate-700">
-                      {project.status}
-                    </span>
-                    <h4 className="text-sm font-bold text-white">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-white dark:text-white light:text-slate-900 text-sm">
                       {project.title}
-                    </h4>
-                    <p className="text-xs text-slate-400 leading-relaxed">
-                      {project.summary}
-                    </p>
+                    </span>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 dark:bg-slate-800 light:bg-white text-slate-300 dark:text-slate-300 light:text-slate-700 border border-slate-700 dark:border-slate-700 light:border-slate-300">
+                      {project.subtitle}
+                    </span>
                   </div>
 
-                  <button
-                    onClick={() => setSelectedProject(project)}
-                    className="text-xs font-semibold text-emerald-400 hover:text-emerald-300 inline-flex items-center gap-1 pt-2 border-t border-slate-800/80"
-                  >
-                    <span>Read Details</span>
-                    <ArrowRight className="w-3 h-3" />
-                  </button>
+                  <p className="text-slate-300 dark:text-slate-300 light:text-slate-600 leading-relaxed text-xs">
+                    {project.summary}
+                  </p>
+
+                  <div className="flex flex-wrap gap-1 pt-1">
+                    {project.technologies.map((t, idx) => (
+                      <span key={idx} className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-900 dark:bg-slate-900 light:bg-slate-200/70 text-slate-400 dark:text-slate-400 light:text-slate-700">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               ))}
             </div>
           )}
         </div>
 
-        {/* Future Concepts & Applied Interests */}
-        <div className="p-6 rounded-2xl bg-slate-900/40 border border-slate-800 space-y-4">
-          <div className="flex items-center justify-between flex-wrap gap-2">
-            <div>
-              <h3 className="text-base font-bold text-white flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-cyan-400" />
-                <span>Concept Planning & Future Applied Interests</span>
-              </h3>
-              <p className="text-xs text-slate-400 mt-0.5">
-                Clearly distinguished as future concepts and research directions, not completed products or client deployments.
-              </p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 pt-2">
-            {conceptProjects.map((p) => (
-              <div key={p.id} className="p-4 rounded-xl bg-slate-800/40 border border-slate-700/60 space-y-2">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-cyan-300 block">
-                  {p.type}
-                </span>
-                <h4 className="text-xs font-bold text-white">{p.title}</h4>
-                <p className="text-[11px] text-slate-400 leading-relaxed">{p.summary}</p>
-                <button
-                  onClick={() => setSelectedProject(p)}
-                  className="text-[11px] font-semibold text-cyan-400 hover:underline inline-flex items-center gap-1 pt-1"
-                >
-                  <span>View Concept Overview</span>
-                  <ArrowRight className="w-3 h-3" />
-                </button>
-              </div>
-            ))}
-
-            {data.futureInterests.slice(0, 2).map((item, i) => (
-              <div key={i} className="p-4 rounded-xl bg-slate-800/30 border border-slate-800 space-y-1.5">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 block">
-                  Research Area
-                </span>
-                <h4 className="text-xs font-bold text-white">{item.title}</h4>
-                <p className="text-[11px] text-slate-400 leading-relaxed">{item.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
       </div>
-
-      {/* Project Modal */}
-      <ProjectModal
-        project={selectedProject}
-        onClose={() => setSelectedProject(null)}
-      />
     </section>
   );
 };

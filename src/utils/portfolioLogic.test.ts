@@ -2,10 +2,11 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   formatFileSize,
-  calculateNutrientVariance,
+  formatFriendlyDate,
   filterProjects,
   generateApplicationSummary,
-  SAMPLE_TRIAL_DATA
+  searchExploreIndex,
+  EXPLORE_INDEX
 } from './portfolioLogic.ts';
 
 test('formatFileSize formats byte quantities into readable strings', () => {
@@ -14,24 +15,10 @@ test('formatFileSize formats byte quantities into readable strings', () => {
   assert.equal(formatFileSize(1048576), '1.0 MB');
 });
 
-test('calculateNutrientVariance computes delta and percentage correctly', () => {
-  // Baseline: 2.75, Current: 3.10
-  const result = calculateNutrientVariance(3.10, 2.75);
-  assert.equal(result.diff, 0.35);
-  assert.equal(result.direction, 'higher');
-  assert.equal(result.diffPct > 0, true);
-
-  // Equal
-  const equalResult = calculateNutrientVariance(2.5, 2.5);
-  assert.equal(equalResult.diff, 0);
-  assert.equal(equalResult.direction, 'equal');
-});
-
-test('SAMPLE_TRIAL_DATA contains valid demonstration treatments', () => {
-  assert.equal(SAMPLE_TRIAL_DATA.length >= 3, true);
-  const baseline = SAMPLE_TRIAL_DATA.find(t => t.id === 'check');
-  assert.ok(baseline);
-  assert.equal(baseline.nitrogenPct > 0, true);
+test('formatFriendlyDate formats dates or preserves academic labels', () => {
+  assert.equal(formatFriendlyDate('Expected May 2028'), 'Expected May 2028');
+  assert.equal(formatFriendlyDate('Present'), 'Present');
+  assert.equal(formatFriendlyDate(''), 'Recent');
 });
 
 test('filterProjects filters by category and search queries', () => {
@@ -45,7 +32,7 @@ test('filterProjects filters by category and search queries', () => {
     },
     {
       id: 'p2',
-      title: 'OneMain Financial AI-Assisted Data Discovery',
+      title: 'OneMain Financial Data Discovery Workflow',
       summary: 'Helped evaluate language model workflows for metadata discovery.',
       technologies: ['Language Models', 'SQL Server'],
       category: 'Data Discovery & AI'
@@ -90,4 +77,33 @@ test('generateApplicationSummary produces clean recruiter output with verified c
   const previewResult = generateApplicationSummary(previewProfile);
   assert.equal(previewResult.quickFields['Personal Website'], undefined);
   assert.equal(previewResult.clipboardFull.includes('run.app'), false);
+});
+
+test('searchExploreIndex finds exact keywords across sections', () => {
+  // Test searching for OneMain
+  const oneMainResults = searchExploreIndex('OneMain');
+  assert.ok(oneMainResults.length >= 1);
+  assert.ok(oneMainResults.some(r => r.title.includes('OneMain')));
+
+  // Test searching for digital twins
+  const digitalTwinsResults = searchExploreIndex('digital twins');
+  assert.ok(digitalTwinsResults.length >= 1);
+  assert.equal(digitalTwinsResults[0].id, 'res-digital-twins');
+
+  // Test searching for 4-H
+  const fourHResults = searchExploreIndex('4-H');
+  assert.ok(fourHResults.length >= 2); // Aerial Ag Innovators, Purdue Extension, World Hunger
+
+  // Test searching for greenhouse
+  const greenhouseResults = searchExploreIndex('greenhouse');
+  assert.ok(greenhouseResults.length >= 1);
+  assert.ok(greenhouseResults.some(r => r.title.includes('Greenhouse')));
+
+  // Test searching for running
+  const runningResults = searchExploreIndex('running');
+  assert.ok(runningResults.length >= 1);
+  assert.ok(runningResults.some(r => r.id === 'pers-marathon'));
+
+  // Test empty query returns empty array
+  assert.deepEqual(searchExploreIndex(''), []);
 });
