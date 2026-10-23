@@ -129,15 +129,15 @@ export const ExperienceTimeline: React.FC = () => {
                   id={`item-${exp.id}`}
                   className="p-4 rounded-xl bg-slate-800/40 dark:bg-slate-800/40 light:bg-slate-50 border border-slate-700/60 dark:border-slate-700/60 light:border-slate-200 space-y-2 text-xs"
                 >
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                     <span className="font-bold text-white dark:text-white light:text-slate-900 text-sm">
                       {exp.role}
                     </span>
-                    <span className="text-[11px] font-mono text-slate-400 dark:text-slate-400 light:text-slate-500">
+                    <span className="text-[11px] font-mono text-slate-400 dark:text-slate-400 light:text-slate-500 shrink-0">
                       {exp.period}
                     </span>
                   </div>
-                  <span className="text-emerald-400 dark:text-emerald-400 light:text-emerald-700 font-semibold block">
+                  <span className="text-emerald-400 dark:text-emerald-400 light:text-emerald-700 font-semibold block text-xs">
                     {exp.company} — {exp.location}
                   </span>
                   <p className="text-slate-300 dark:text-slate-300 light:text-slate-600 leading-relaxed text-xs">

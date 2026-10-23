@@ -82,6 +82,9 @@ export function generateApplicationSummary(profile: {
   graduationDate: string;
   email: string;
   linkedin: string;
+  phone?: string;
+  address?: string;
+  gpa?: string;
   portfolioUrl?: string;
   quickFillSummary: string;
 }): {
@@ -99,10 +102,24 @@ export function generateApplicationSummary(profile: {
 
   const lines = [
     `Name: ${profile.name}`,
-    `Education: ${profile.university} — ${profile.major} (${profile.graduationDate})`,
-    `Email: ${profile.email}`,
-    `LinkedIn: ${profile.linkedin}`
+    `Education: ${profile.university} — ${profile.major} (${profile.graduationDate})`
   ];
+
+  if (profile.gpa) {
+    lines.push(`GPA: ${profile.gpa}`);
+  }
+
+  lines.push(`Email: ${profile.email}`);
+
+  if (profile.phone) {
+    lines.push(`Phone: ${profile.phone}`);
+  }
+
+  if (profile.address) {
+    lines.push(`Address: ${profile.address}`);
+  }
+
+  lines.push(`LinkedIn: ${profile.linkedin}`);
 
   if (hasConfiguredPublicUrl && profile.portfolioUrl) {
     lines.push(`Personal Website: ${profile.portfolioUrl}`);
@@ -114,8 +131,8 @@ export function generateApplicationSummary(profile: {
 
   const markdownSummary = `## ${profile.name}
 - **Education:** ${profile.university} — ${profile.major} (${profile.graduationDate})
-- **Email:** [${profile.email}](mailto:${profile.email})
-- **LinkedIn:** [${profile.linkedin}](${profile.linkedin})
+${profile.gpa ? `- **GPA:** ${profile.gpa}\n` : ''}- **Email:** [${profile.email}](mailto:${profile.email})
+${profile.phone ? `- **Phone:** ${profile.phone}\n` : ''}- **LinkedIn:** [${profile.linkedin}](${profile.linkedin})
 ${hasConfiguredPublicUrl && profile.portfolioUrl ? `- **Personal Website:** [${profile.portfolioUrl}](${profile.portfolioUrl})\n` : ''}
 > ${profile.quickFillSummary}
 `;
@@ -124,9 +141,20 @@ ${hasConfiguredPublicUrl && profile.portfolioUrl ? `- **Personal Website:** [${p
     'Full Name': profile.name,
     'Education': `${profile.university} — ${profile.major} (${profile.graduationDate})`,
     'Email Address': profile.email,
-    'LinkedIn Profile': profile.linkedin,
-    'Candidate Summary': profile.quickFillSummary
+    'LinkedIn Profile': profile.linkedin
   };
+
+  if (profile.phone) {
+    quickFields['Phone Number'] = profile.phone;
+  }
+  if (profile.address) {
+    quickFields['Address'] = profile.address;
+  }
+  if (profile.gpa) {
+    quickFields['GPA'] = profile.gpa;
+  }
+
+  quickFields['Candidate Summary'] = profile.quickFillSummary;
 
   if (hasConfiguredPublicUrl && profile.portfolioUrl) {
     quickFields['Personal Website'] = profile.portfolioUrl;

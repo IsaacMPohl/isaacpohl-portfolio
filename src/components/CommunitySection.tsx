@@ -28,8 +28,8 @@ export const CommunitySection: React.FC = () => {
 
         {/* 1. Balanced Campus Leadership Grid: 3 Officer Roles + Compact Club Row */}
         <div id="leadership-roles" className="space-y-4">
-          <h3 className="text-lg sm:text-xl font-bold text-white dark:text-white light:text-slate-900 flex items-center gap-2">
-            <Users className="w-4 h-4 text-emerald-400 light:text-emerald-600" />
+          <h3 className="text-lg sm:text-xl font-bold text-white dark:text-white light:text-slate-900 flex items-start gap-2.5">
+            <Users className="w-4 h-4 text-emerald-400 light:text-emerald-600 shrink-0 mt-1" />
             <span>Elected & Appointed Campus Leadership Positions</span>
           </h3>
 
@@ -84,8 +84,8 @@ export const CommunitySection: React.FC = () => {
 
         {/* 2. Featured Service & Outreach Stories */}
         <div className="space-y-5">
-          <h3 className="text-lg sm:text-xl font-bold text-white dark:text-white light:text-slate-900 flex items-center gap-2">
-            <HeartHandshake className="w-4 h-4 text-emerald-400 light:text-emerald-600" />
+          <h3 className="text-lg sm:text-xl font-bold text-white dark:text-white light:text-slate-900 flex items-start gap-2.5">
+            <HeartHandshake className="w-4 h-4 text-emerald-400 light:text-emerald-600 shrink-0 mt-1" />
             <span>Featured Service & Mentorship Initiatives</span>
           </h3>
 
@@ -148,8 +148,8 @@ export const CommunitySection: React.FC = () => {
               className="p-5 rounded-2xl bg-slate-900/40 dark:bg-slate-900/40 light:bg-white border border-slate-800 dark:border-slate-800 light:border-slate-300 space-y-3 flex flex-col justify-between"
             >
               <div className="space-y-2">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-slate-800 dark:bg-slate-800 light:bg-slate-100 text-slate-300 dark:text-slate-300 light:text-slate-700 border border-slate-700 dark:border-slate-700 light:border-slate-300">
+                <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+                  <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-slate-800 dark:bg-slate-800 light:bg-slate-100 text-slate-300 dark:text-slate-300 light:text-slate-700 border border-slate-700 dark:border-slate-700 light:border-slate-300 shrink-0">
                     {item.category}
                   </span>
                   <span className="text-slate-400 dark:text-slate-400 light:text-slate-500 font-mono text-[11px]">{item.period}</span>
@@ -175,8 +175,8 @@ export const CommunitySection: React.FC = () => {
         <div id="honors-awards-section" className="p-5 sm:p-6 rounded-2xl bg-slate-900/40 dark:bg-slate-900/40 light:bg-white border border-slate-800 dark:border-slate-800 light:border-slate-300 space-y-4 shadow-sm">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <h3 className="text-base sm:text-lg font-bold text-white dark:text-white light:text-slate-900 flex items-center gap-2">
-                <Award className="w-4 h-4 text-amber-400 dark:text-amber-400 light:text-amber-600" />
+              <h3 className="text-base sm:text-lg font-bold text-white dark:text-white light:text-slate-900 flex items-start gap-2">
+                <Award className="w-4 h-4 text-amber-400 dark:text-amber-400 light:text-amber-600 shrink-0 mt-1" />
                 <span>Selected Honors & Competitive Recognitions</span>
               </h3>
               <p className="text-xs text-slate-400 dark:text-slate-400 light:text-slate-500 mt-0.5">

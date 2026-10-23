@@ -83,6 +83,27 @@ export interface SupportedSkillGroup {
   }[];
 }
 
+export interface ResumeWorkExperience {
+  company: string;
+  location: string;
+  period: string;
+  role: string;
+  bullets: string[];
+}
+
+export interface ResumeExtracurricular {
+  organization: string;
+  roleAndTimeline: string;
+}
+
+export interface ResumeSkillsData {
+  languages: string;
+  aiAndData: string;
+  frameworksAndWeb: string;
+  databases: string;
+  tools: string;
+}
+
 export const PORTFOLIO_DATA = {
   profile: {
     name: 'Isaac Pohl',
@@ -92,18 +113,22 @@ export const PORTFOLIO_DATA = {
     statusLine: 'Interested in 2027 internships and applied research in agricultural technology.',
     locationLine: 'Based in Murray, Kentucky; from southwestern Indiana',
 
-    // Standard professional contacts
+    // Standard professional contacts matching exact resume
     email: 'isaacpohl0@gmail.com',
+    phone: '(812) 215-0290',
+    address: '66 W 975 S. Haubstadt, IN 47639',
     linkedin: 'https://www.linkedin.com/in/isaac-pohl/',
+    linkedinDisplay: 'www.linkedin.com/in/isaac-pohl',
     linkedinHandle: 'isaac-pohl',
-    resumePdfUrl: `${import.meta.env.BASE_URL}assets/aistudio/Isaac_Pohl_-_Resume_5fa38e69.pdf`,
+    resumePdfUrl: `${import.meta.env.BASE_URL}Isaac_Pohl_Resume.pdf`,
+    gpa: '3.94',
 
     // Academic baseline
     university: 'Murray State University',
     academicStanding: 'Junior',
     major: 'Computer Science and Agriculture–Agriscience Technology (Dual Major)',
     graduationDate: 'Expected May 2028',
-    locationForResume: 'Haubstadt / Princeton, IN & Murray, KY',
+    locationForResume: '66 W 975 S. Haubstadt, IN 47639',
 
     // Approved About Narrative
     aboutIntro: 'My main motivation is to help advance agriculture through technology. I care about understanding the grower, agronomist, researcher, or other person who will use a tool, then making information easier to work with. My agriculture and computer science classes, fieldwork, software internships, greenhouse experience, and service work contribute different parts of that perspective.',
@@ -796,7 +821,112 @@ Isaac Pohl`,
         { name: 'Agronomic Communication', context: 'Translating farmer and agronomist questions into clear comparison charts and data views' }
       ]
     }
-  ] as SupportedSkillGroup[]
+  ] as SupportedSkillGroup[],
+
+  // Exact 1-to-1 Resume Content matching the verified authentic PDF
+  resumeData: {
+    fullName: 'Isaac Pohl',
+    address: '66 W 975 S. Haubstadt, IN 47639',
+    email: 'isaacpohl0@gmail.com',
+    phone: '(812) 215-0290',
+    linkedinDisplay: 'www.linkedin.com/in/isaac-pohl',
+    linkedinUrl: 'https://www.linkedin.com/in/isaac-pohl/',
+    education: [
+      {
+        institution: 'Murray State University - Murray, KY',
+        period: 'May 2028',
+        gpa: '3.94',
+        degree: 'B.S. Dual Major: Agriculture and Computer Science'
+      },
+      {
+        institution: 'Gibson Southern High School - Fort Branch, IN',
+        period: 'May 2024',
+        degree: ''
+      },
+      {
+        institution: 'Southern Indiana Career & Technical Center',
+        period: 'May 2024',
+        degree: ''
+      }
+    ],
+    experience: [
+      {
+        company: 'OneMain Financial - Evansville, IN',
+        period: 'June 2026-August 2026',
+        role: 'Summer Technology Intern',
+        bullets: [
+          'Built an AI-assisted pipeline to analyze application and database metadata for enterprise data discovery.',
+          'Validated application and database findings and documented results for business stakeholders.',
+          'Delivered the end-of-summer project presentation to OneMain\'s senior technology and business leaders.'
+        ]
+      },
+      {
+        company: 'Purdue Extension Office - Evansville, IN',
+        period: 'May 2025-August 2025',
+        role: '4-H Youth Development Intern',
+        bullets: [
+          'Designed and facilitated youth programs and workshops that promoted leadership, teamwork, life skills, and personal growth in alignment with 4-H and Purdue guidelines.'
+        ]
+      },
+      {
+        company: 'Pohl Ag Service - Princeton, IN',
+        period: 'May 2020-Present',
+        role: 'Junior Assistant',
+        bullets: [
+          'Collect soil, crop, and leaf samples and support fertilizer and crop-management trials.',
+          'Support precision-agriculture fieldwork with drones, field mapping, and moisture probes.',
+          'Built a Microsoft Access database to track leaf-sample data and generate agronomic reports.'
+        ]
+      },
+      {
+        company: "Pohl's Greenhouse - Haubstadt, IN",
+        period: 'January 2020-May 2025',
+        role: 'Owner',
+        bullets: [
+          'Owned a nursery and managed plant production, inventory, finances, marketing, and customer sales.',
+          'Used FFA grants to add automated lighting, watering, timers, and environmental controls.'
+        ]
+      },
+      {
+        company: 'Parrish Consulting Services - Princeton, IN',
+        period: 'January 2024-August 2024',
+        role: 'Software Development Intern',
+        bullets: [
+          'Developed internal and client applications using C#, Blazor, ASP.NET Core, WPF, SQL Server, APIs.',
+          'Deployed debugging tools to test APIs and application code in server environments.'
+        ]
+      }
+    ] as ResumeWorkExperience[],
+    extracurriculars: [
+      {
+        organization: 'Omicron Delta Kappa',
+        roleAndTimeline: 'President & Social Service Treasurer | 2025 - Present'
+      },
+      {
+        organization: 'Gibson Southern FFA',
+        roleAndTimeline: 'National FFA Proficiency Award Finalist, Top 4 Nationally | 2020 - 2024'
+      },
+      {
+        organization: 'Alpha Tau Omega',
+        roleAndTimeline: 'Social Service Coordinator & Chaplain | 2024 - Present'
+      },
+      {
+        organization: 'Murray State Agronomy, 4-H & Drone Clubs',
+        roleAndTimeline: 'Secretary | 2024 - Present'
+      },
+      {
+        organization: 'Vanderburgh County 4-H',
+        roleAndTimeline: 'Volunteer | 2012 - Present'
+      }
+    ] as ResumeExtracurricular[],
+    technicalSkills: {
+      languages: 'Python, C#, Java, JavaScript, SQL',
+      aiAndData: 'LLM workflow design, prompt and context engineering, AI-assisted data analysis, multi-model evaluation, human-in-the-loop validation, data discovery, dimensional modeling',
+      frameworksAndWeb: 'Blazor, ASP.NET Core, WPF, Node.js, HTML/CSS, REST APIs',
+      databases: 'SQL Server, MariaDB, Microsoft Access',
+      tools: 'ChatGPT/GPT, Claude, Gemini, Git/GitHub, SQL Server Management Studio, Android Studio, Command Line'
+    } as ResumeSkillsData
+  }
 };
 
 export const PROFILE_DATA = PORTFOLIO_DATA.profile;

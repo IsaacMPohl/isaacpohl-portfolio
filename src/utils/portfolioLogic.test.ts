@@ -69,6 +69,20 @@ test('generateApplicationSummary produces clean recruiter output with verified c
   assert.equal(result.quickFields['Email Address'], 'isaacpohl0@gmail.com');
   assert.equal(result.quickFields['LinkedIn Profile'], 'https://www.linkedin.com/in/isaac-pohl/');
 
+  // Verify phone, address, and GPA support
+  const fullProfile = {
+    ...profile,
+    phone: '(812) 215-0290',
+    address: '66 W 975 S. Haubstadt, IN 47639',
+    gpa: '3.94'
+  };
+  const fullResult = generateApplicationSummary(fullProfile);
+  assert.equal(fullResult.quickFields['Phone Number'], '(812) 215-0290');
+  assert.equal(fullResult.quickFields['Address'], '66 W 975 S. Haubstadt, IN 47639');
+  assert.equal(fullResult.quickFields['GPA'], '3.94');
+  assert.ok(fullResult.clipboardFull.includes('(812) 215-0290'));
+  assert.ok(fullResult.clipboardFull.includes('GPA: 3.94'));
+
   // Website omitted when preview URL is provided
   const previewProfile = {
     ...profile,
